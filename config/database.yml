@@ -1,0 +1,11 @@
+production:
+    db_name: 'development'
+    db_host: 'localhost'
+    db_username: 'root'
+    db_password: 'root'    
+
+development:
+    db_name: 'development'
+    db_host: 'localhost'
+    db_username: 'root'
+    db_password: 'root'

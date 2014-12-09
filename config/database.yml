@@ -1,11 +1,18 @@
+default: &default
+    adapter: mysql
+    username: root
+    password: rootpass
+    pool: 5
+    encoding: utf8
+
 production:
-    db_name: 'development'
-    db_host: 'localhost'
-    db_username: 'root'
-    db_password: 'root'    
+    <<: *default
+    database: production_deploy_logger
 
 development:
-    db_name: 'development'
-    db_host: 'localhost'
-    db_username: 'root'
-    db_password: 'root'
+    <<: *default
+    database: development_deploy_logger
+
+test:
+    <<: *default
+    database: test_deploy_logger

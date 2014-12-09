@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'sinatra'
-require 'sinatra/activerecord'
+require 'sinatra/base'
+# require 'sinatra/activerecord'
 
 get '/health/' do
     'OK'

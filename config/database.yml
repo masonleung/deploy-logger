@@ -1,5 +1,6 @@
 default: &default
     adapter: mysql
+    host: localhost
     username: root
     password: rootpass
     pool: 5
@@ -7,12 +8,12 @@ default: &default
 
 production:
     <<: *default
-    database: production_deploy_logger
+    database: deploy_logger_production
 
 development:
     <<: *default
-    database: development_deploy_logger
+    database: deploy_logger_development
 
 test:
     <<: *default
-    database: test_deploy_logger
+    database: deploy_logger_test

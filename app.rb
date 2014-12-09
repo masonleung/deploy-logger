@@ -6,3 +6,10 @@ require 'sinatra'
 get '/health/' do
     'OK'
 end
+
+
+post '/api/deploy/log' do
+    
+    
+    
+end

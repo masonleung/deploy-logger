@@ -6,6 +6,7 @@ gem 'sinatra-activerecord'
 gem 'unicorn'
 gem 'rake'
 gem 'mysql'
+gem 'rack-test'
 
 group :test, :development do
     gem "rspec"

@@ -1,4 +1,5 @@
 require 'rack/test'
+require 'rspec'
 require File.expand_path '../../app.rb', __FILE__
 
 ENV['RACK_ENV'] = 'test'
@@ -11,5 +12,7 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
+
+  config.include Rack::Test::Methods
 
 end

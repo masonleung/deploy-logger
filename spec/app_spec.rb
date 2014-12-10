@@ -6,9 +6,14 @@ describe "DeployLogger Application" do
         Sinatra::Application
     end
 
+    let(:deployer) { 'deployer'}
+    let(:tag) {'1234556'}
+    let(:application) {'bakery'}
+    let(:environment) {'production'}
+
     describe "/health" do 
         it "should passes health check" do
-            get '/health/'
+            get '/health'
             expect(last_response).to be_ok
         end
     end
@@ -22,17 +27,27 @@ describe "DeployLogger Application" do
 
         it "should save deploy log" do
             params = {
-                deployer: 'mason',
-                tag: '123456abcdefg',
-                application: 'bakery',
-                environment: 'production'
+                deployer: deployer,
+                tag: tag,
+                application: application,
+                environment: environment
             }
+            binding.pry
             post '/api/deploy/log', params
             expect(last_response).to be_ok
         end
 
         it "should get the recent deploy by application" do
+            # create(:deploy_log, deployer: "deployer_1", tag: "tag_1")
+            # create(:deploy_log, deployer: "deployer_1", tag: "tag_2")
+            # create(:deploy_log, deployer: "deployer_2", tag: "tag_1", application: 'adserver')
+            # create(:deploy_log, deployer: "deployer_2", tag: "tag_2", application: 'adserver')
+            # create(:deploy_log, deployer: "deployer_3", tag: "tag_1", application: 'adserver', environment: "staging")
+            # create(:deploy_log, deployer: "deployer_3", tag: "tag_2", application: 'adserver', environment: "staging")
+            
 
         end 
+
+
     end
 end

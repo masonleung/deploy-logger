@@ -12,4 +12,5 @@ group :test, :development do
     gem "rspec"
     gem 'pry'
     gem 'pry-nav'
+    gem 'factory_girl'
 end

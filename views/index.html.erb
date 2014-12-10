@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <h1>Deploy Logs</h1>
+        <div>
+        <% @deploy_log.each do |log| %>
+            <div><%= log['id']%> </div>
+        <% end %>
+        </div>
+    </body>
+</html>

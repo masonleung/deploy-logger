@@ -1,15 +1,17 @@
-require 'rubygems'
-require 'bundler'
-
-Bundler.require
-
-# require 'sinatra/base'
-# require 'sinatra/activerecord'
-# require 'sinatra'
+require 'sinatra'
+require 'sinatra/activerecord'
 require 'pry'
 require 'pry-nav'
+require 'sinatra/contrib'
 
 set :bind, '0.0.0.0'
+
+before /.*/ do
+    if request.url.match(/.json$/)
+        request.accept.unshift('application/json')
+        request.path_info = request.path_info.gsub(/.json$/, '')
+    end
+end
 
 get '/health' do
     'OK'
@@ -26,8 +28,13 @@ post '/api/deploy/log' do
     DeployLog.create(deployer: deployer, tag: tag, application: application, environment: environment).save
 end
 
-get '/api/deploy/log' do
-    DeployLog.find(:all, :group => [ :application, :environment])
+get '/api/deploy/log', :provides => [:html, :json] do
+    deploy_log_ids = DeployLog.select("max(id) as id").group(:application, :environment).collect(&:id)
+    deploy_logs = DeployLog.order(:application, :environment).where(:id => deploy_log_ids)
+    respond_to do |format|
+        format.json { deploy_logs.to_json }
+        format.html { render "index", :locals => { :deploy_logs => deploy_logs} }
+    end
 end
 
 get '/api/deploy/log/staging' do

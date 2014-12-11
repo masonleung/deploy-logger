@@ -29,6 +29,7 @@ RSpec.configure do |config|
   # mock model with factory girl
   config.include FactoryGirl::Syntax::Methods
 
+  # clean up and reset auto id
   config.before(:suite) do
     DatabaseCleaner.clean_with(:deletion)
     DatabaseCleaner.strategy = :truncation

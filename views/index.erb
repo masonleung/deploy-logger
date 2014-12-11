@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h1>Deploy Logs</h1>
+        <div>Date</div><div>Application</div><div>Environment</div><div>Tag</div><div>Deployer</div>
+        <div>
+        <% deploy_logs.each do |log| %>
+            <div><%= log['created_at'] %> </div>
+            <div><%= log['application'] %> </div>
+            <div><%= log['environment'] %> </div>
+            <div><%= log['tag'] %> </div>
+            <div><%= log['deployer'] %> </div>
+        <% end %>
+        </div>
+    </body>
+</html>

@@ -1,15 +1,32 @@
 <html>
+    <head>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    </head>
+
     <body>
         <h1>Deploy Logs</h1>
-        <div>Date</div><div>Application</div><div>Environment</div><div>Tag</div><div>Deployer</div>
-        <div>
-        <% deploy_logs.each do |log| %>
-            <div><%= log['created_at'] %> </div>
-            <div><%= log['application'] %> </div>
-            <div><%= log['environment'] %> </div>
-            <div><%= log['tag'] %> </div>
-            <div><%= log['deployer'] %> </div>
-        <% end %>
+        <div class="container"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Application</th>
+                        <th>Environment</th>
+                        <th>Tag</th>
+                        <th>Deployer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% deploy_logs.each do |log| %>
+                    <td><%= log['created_at'] %> </td>
+                    <td><%= log['application'] %> </td>
+                    <td><%= log['environment'] %> </td>
+                    <td><%= log['tag'] %> </td>
+                    <td><%= log['deployer'] %> </td>
+                    <tr>
+                <% end %>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

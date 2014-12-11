@@ -13,6 +13,14 @@ before /.*/ do
     end
 end
 
+
+def render_response deploy_logs
+    respond_to do |format|
+        format.json { deploy_logs.to_json }
+        format.html { erb :index, :locals => { :deploy_logs => deploy_logs} }
+    end
+end
+
 get '/health' do
     'OK'
 end
@@ -31,20 +39,22 @@ end
 get '/api/deploy/log', :provides => [:html, :json] do
     deploy_log_ids = DeployLog.select("max(id) as id").group(:application, :environment).collect(&:id)
     deploy_logs = DeployLog.order(:application, :environment).where(:id => deploy_log_ids)
-    respond_to do |format|
-        format.json { deploy_logs.to_json }
-        format.html { render "index", :locals => { :deploy_logs => deploy_logs} }
-    end
+    render_response deploy_logs
 end
 
 get '/api/deploy/log/staging' do
-    DeployLog.find(:all, :group => [ :application, :environment])
+    deploy_log_ids = DeployLog.select("max(id) as id").where(:environment => 'staging').group(:application, :environment).collect(&:id)
+    deploy_logs = DeployLog.order(:application, :environment).where(:id => deploy_log_ids)
+    render_response deploy_logs
 end
 
 get '/api/deploy/log/production' do
-    DeployLog.find(:all, :group => [ :application, :environment])
+    deploy_log_ids = DeployLog.select("max(id) as id").where(:environment => 'production').group(:application, :environment).collect(&:id)
+    deploy_logs = DeployLog.order(:application, :environment).where(:id => deploy_log_ids)
+    render_response deploy_logs
 end
 
 get '/api/deploy/recent' do
-
+    deploy_logs = DeployLogger.order(:id).limit(50)
+    render_response deploy_logs
 end

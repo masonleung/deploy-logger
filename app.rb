@@ -13,7 +13,6 @@ before /.*/ do
     end
 end
 
-
 def render_response deploy_logs
     respond_to do |format|
         format.json { deploy_logs.to_json }
@@ -33,7 +32,9 @@ post '/api/deploy/log' do
     if (deployer.nil? || tag.nil? || application.nil? || environment.nil?)
         halt 404, "missing required parameters"
     end
-    DeployLog.create(deployer: deployer, tag: tag, application: application, environment: environment).save
+    DeployLog.new(deployer: deployer, tag: tag, application: application, environment: environment).save
+    status 200
+    body 'added'
 end
 
 get '/api/deploy/log', :provides => [:html, :json] do
@@ -42,19 +43,19 @@ get '/api/deploy/log', :provides => [:html, :json] do
     render_response deploy_logs
 end
 
-get '/api/deploy/log/staging' do
+get '/api/deploy/log/staging', :provides => [:html, :json] do
     deploy_log_ids = DeployLog.select("max(id) as id").where(:environment => 'staging').group(:application, :environment).collect(&:id)
     deploy_logs = DeployLog.order(:application, :environment).where(:id => deploy_log_ids)
     render_response deploy_logs
 end
 
-get '/api/deploy/log/production' do
+get '/api/deploy/log/production', :provides => [:html, :json] do
     deploy_log_ids = DeployLog.select("max(id) as id").where(:environment => 'production').group(:application, :environment).collect(&:id)
     deploy_logs = DeployLog.order(:application, :environment).where(:id => deploy_log_ids)
     render_response deploy_logs
 end
 
-get '/api/deploy/recent' do
-    deploy_logs = DeployLogger.order(:id).limit(50)
+get '/api/deploy/log/recent', :provides => [:html, :json] do
+    deploy_logs = DeployLog.order(:id).limit(50)
     render_response deploy_logs
 end

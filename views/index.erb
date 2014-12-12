@@ -21,7 +21,7 @@
                     <td><%= log['created_at'] %> </td>
                     <td><%= log['application'] %> </td>
                     <td><%= log['environment'] %> </td>
-                    <td><%= log['tag'] %> </td>
+                    <td><a href=https://github.com/sharethrough/<%= log['application'] %>/commit/<%= log['tag'] %>><%= log['tag']%></a></td>
                     <td><%= log['deployer'] %> </td>
                     <tr>
                 <% end %>

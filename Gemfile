@@ -7,6 +7,8 @@ gem 'unicorn'
 gem 'mysql'
 gem 'sinatra-contrib'
 gem 'rake'
+gem 'capistrano'
+gem 'capistrano-ext'
 
 group :test, :development do
     gem "rspec"
